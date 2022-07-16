@@ -1,24 +1,8 @@
 import { useState, useEffect } from "react"
 import { auth, firestore, storage } from "./firebase"
-import * as firebase from "./firebase";
 
-
-export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim()).then((userCredential)=>{
-    // send verification mail.
-  userCredential.user.sendEmailVerification();
-  auth.signOut();
-  alert("Email sent to verify your account. Please check your inbox.");
-})
-.catch(alert);
-
-export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
-        if(!user.user.emailVerified){
-            auth.signOut();
-            alert("Email not verified, please check mail and verify");
-        }
-    });
-
-
+export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim())
+export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim())
 export const logout = () => {
     localStorage.setItem("gfc-user", "")
     return auth.signOut()
@@ -33,12 +17,12 @@ export const useAuthenticated = () => {
 }
 
 export const createForm = formModel => {
-    const user = auth.currentUser;
-    return firestore.collection("forms").add({...formModel, uid: user.uid, globalUid : 'form'})
+    const user = JSON.parse(localStorage.getItem("gfc-user"))
+    return firestore.collection("forms").add({...formModel, uid: user.uid})
 }
 
 export const getForms = async () => {
-    const user =  auth.currentUser;
+    const user = JSON.parse(localStorage.getItem("gfc-user"))
     let docs = await firestore.collection("forms").where('uid','==',user.uid).get({})
     docs = docs.docs
     let forms = docs.map(doc => ({...doc.data(), id: doc.id}))
@@ -46,8 +30,7 @@ export const getForms = async () => {
 }
 
 export const getForm = async ops => {
-    const globalUser = JSON.parse(localStorage.getItem("gfc-user"));
-    let docs = await firestore.collection("forms").where('globalUid','==','form').get(ops)
+    let docs = await firestore.collection("forms").get(ops)
     let doc = docs.docs[0]
     doc = {...doc.data(), id: doc.id }
     return doc
@@ -69,8 +52,7 @@ export const uploadFile = (file, fileName) => {
 
 export const submitForm = (submission, formId) => firestore.collection("submissions").add({
     submission,
-    formId,
-    marks: 0,
+    formId
 })
 
 export const getSubmissions = async opts => {
