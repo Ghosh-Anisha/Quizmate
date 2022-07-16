@@ -33,15 +33,13 @@ export const useAuthenticated = () => {
 }
 
 export const createForm = formModel => {
-    const user = JSON.parse(localStorage.getItem("gfc-user"))
+    const user = auth.currentUser;
     return firestore.collection("forms").add({...formModel, uid: user.uid})
 }
 
 export const getForms = async () => {
-    const user = JSON.parse(localStorage.getItem("gfc-user"))
-    let docs = await firestore.collection("forms").get({
-        uid: user.uid
-    })
+    const user =  auth.currentUser;
+    let docs = await firestore.collection("forms").where('uid','==',user.uid).get({})
     docs = docs.docs
     let forms = docs.map(doc => ({...doc.data(), id: doc.id}))
     return forms
