@@ -72,7 +72,7 @@ export const createSubmitableModel = fields => {
 
 export const hasError = fields => {
     for(let field of fields){
-        if(!field.required && !field.value.trim()) continue
+        if(!field.required) continue
 
         if(["short-text", "long-text", "number", "file"].indexOf(field.type) > -1){
             if(field.required && !field.value.trim()) return `'${field.title}' is a required field`
