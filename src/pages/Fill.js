@@ -20,7 +20,7 @@ function Fill(){
         if(!localStorage.getItem('gfc-user')) return
         const fetchData = async () => {
             try{
-                let frm = await getForm({ id })
+                let frm = await getForm({id })
                 setForm(frm)
                 setLoading(false)
             }catch(e){
@@ -38,7 +38,7 @@ function Fill(){
                 loading ? <p className="text-center mt-1"><span className="spinner"></span></p>
                 : msg ? <h3 className="msg mt-1">{msg}</h3>
                 : submitted ? <h3 className="msg mt-1">{form ? (form.endMessage || "Thank you for taking the quiz!") : "Unknown state"}</h3>
-                : form ? expired() ? <h3 className="msg mt-1">This quiz has been expired</h3>
+                : form ? expired() ? <h3 className="msg mt-1">This quiz has expired</h3>
                 : <RenderReactiveForm model={form} onSubmitted={() => setSubmitted(true)} />
                 : <h3 className="msg mt-1">Quiz not found</h3> 
             }

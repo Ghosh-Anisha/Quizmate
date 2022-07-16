@@ -13,7 +13,6 @@ function Forms(){
         const fetchData = async () => {
             try{
                 let frms = await getForms()
-                
                 setForms(frms)
                 setLoading(false)
             }catch(e){

@@ -41,7 +41,7 @@ function Create(){
         setFormModel(_model)
     }
 
-    const inputTypes = ["short-text", "long-text", "number", "multioption-singleanswer", "multioption-multianswer", "file"]
+    const inputTypes = ["short-text", "long-text", "number", "multiple option-singleanswer", "multiple option-multianswer"]
 
     const createForm = async () => {
         if(loading) return
@@ -83,8 +83,9 @@ function Create(){
                 </div>
 
                 <div className="input">
-                    <label>Validity(Optonal)</label>
-                    <input type="number" placeholder="For how many hours the quiz should be active" onKeyDown={e => {if(e.key==='.' || e.key==='-'){e.preventDefault()}}} onChange={e => updateObjState(setFormModel, formModel ,"expiration", e.target.value)} />
+                    <label>Validity</label>
+                    <input type="number" placeholder="For how many hours the quiz should be active" onKeyDown={e => {if(e.key==='.' || e.key==='-'){
+                        e.preventDefault()}}} onChange={e => updateObjState(setFormModel, formModel ,"expiration", e.target.value)} />
                 </div>
             </div>
 

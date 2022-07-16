@@ -34,7 +34,7 @@ export const useAuthenticated = () => {
 
 export const createForm = formModel => {
     const user = auth.currentUser;
-    return firestore.collection("forms").add({...formModel, uid: user.uid})
+    return firestore.collection("forms").add({...formModel, uid: user.uid, globalUid : 'form'})
 }
 
 export const getForms = async () => {
@@ -46,7 +46,8 @@ export const getForms = async () => {
 }
 
 export const getForm = async ops => {
-    let docs = await firestore.collection("forms").get(ops)
+    const globalUser = JSON.parse(localStorage.getItem("gfc-user"));
+    let docs = await firestore.collection("forms").where('globalUid','==','form').get(ops)
     let doc = docs.docs[0]
     doc = {...doc.data(), id: doc.id }
     return doc
@@ -68,14 +69,20 @@ export const uploadFile = (file, fileName) => {
 
 export const submitForm = (submission, formId) => firestore.collection("submissions").add({
     submission,
-    formId
+    formId,
+    marks: 0,
 })
 
 export const getSubmissions = async opts => {
     let docs = await firestore.collection("submissions").get(opts)
     docs = docs.docs
     let submissions = docs.map(doc => ({...doc.data(), id: doc.id}))
+    for(let key in submissions) {
+        let submission = submissions[key];
+        console.log(submission.marks)
+    }
     console.log(submissions);
     return submissions
 }
+
 
