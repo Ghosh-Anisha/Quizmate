@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { validateEmail } from "../utils"
 import { login } from "../db"
 import {auth , provider}  from '../db/firebase.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Login(){
     const [email, setEmail] = useState("")
@@ -25,9 +28,10 @@ function Login(){
         setLoading(true) 
 
         try{
-            await login(email, pwd)
+            await login(email, pwd);
+
         }catch(e){
-            setLoading(false)
+            setLoading(false);
             setErr(e.message)
         }
         

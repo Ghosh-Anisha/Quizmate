@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react"
 import { auth, firestore, storage } from "./firebase"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim()).then((userCredential)=>{
   userCredential.user.sendEmailVerification();
   auth.signOut();
-  alert("Email sent to verify your account. Please check your inbox.");
+  alert("Please check your email for verification link");
+  toast.info("Please check your email for verification link");
+  <ToastContainer floatingTime={5000}/>
 })
 .catch(alert);
 export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
         if(!user.user.emailVerified){
+            toast.error("Please verify your email");
+            <ToastContainer/>
             auth.signOut();
-            alert("Email not verified, please check mail and verify");
+            alert("Please verify your email");
         }
     });
 
