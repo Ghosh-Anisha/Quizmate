@@ -3,8 +3,10 @@ import { useState, createRef } from 'react'
 function AddMultiOptionField({ inputType, add, close }){
     const [err, setErr ] = useState("")
     const [opterr, setOpterr ] = useState("")
-    const [answer,setAnswer]=useState("")
+
     const [title, setTitle] = useState("")
+    const [answer,setAnswer]=useState("")
+
     const [required, setRequired] = useState(false)
     const inputRef = createRef()
     const [options, setOptions] = useState([])
@@ -53,9 +55,8 @@ function AddMultiOptionField({ inputType, add, close }){
             )}
             <div className="input grey-container p-1">
                 <input type="text" className="mb-1" placeholder="Enter a option" onChange={e => setOption(e.target.value)} ref={inputRef} />
-                {opterr && <p className="err mb-1 text-small">{opterr}</p>}
-                
                 <input type= "text" className="mb-1" placeholder="Enter answer" onChange={e=> setAnswer(e.target.value)} ref={inputRef} />
+                {opterr && <p className="err mb-1 text-small">{opterr}</p>}
                 <button class="btn" onClick={addOption}>Add Option</button>
             </div>
             <div className="input inline">

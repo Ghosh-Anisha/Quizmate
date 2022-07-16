@@ -252,6 +252,7 @@ input.file{
 }
 .card-nav{
   text-align: right;
+  display: flex;
   padding-top: 0.5em;
 }
 .card-nav .nav-item{
@@ -298,6 +299,9 @@ input.file{
 .footer{
   background-color: var(--primary-color);
   color: #fff;
+  position: -webkit-sticky;
+  display: flex;
+  bottom: 0;
   padding-top: max(1.5em, 2vw);
   padding-bottom: max(1.5em, 2vw);
   display: grid;

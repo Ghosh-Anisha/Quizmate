@@ -3,9 +3,9 @@ import { useState } from 'react'
 function AddTextField({inputType, add, close}){
     const [err, setErr ] = useState("")
 
-    const [question, setQuestion] = useState("")
-
     const [title, setTitle] = useState("")
+
+    const [answer, setAnswer] = useState("")
 
     const [marks, setMarks] = useState()
 
@@ -13,12 +13,12 @@ function AddTextField({inputType, add, close}){
     const [required, setRequired] = useState(false)
 
     const addField = () => {
-        if(!question.trim()) return setErr("question is required")
-        if(question.trim().length < 3) return setErr("question should be atleast 3 characters long")
+        if(!title.trim()) return setErr("title is required")
+        if(title.trim().length < 3) return setErr("title should be atleast 3 characters long")
 
         add({
-            question,
             title,
+            answer,
             required,
             marks,
             type: inputType
@@ -29,12 +29,12 @@ function AddTextField({inputType, add, close}){
     return (
         <div>
             <div className="input">
-                <label>Enter question</label>
-                <input type="text" placeholder={`Eg. Enter your ${inputType === "short-text" ? "Username" : inputType === "long-text" ? "information" : "age"}`} onChange={e => setQuestion(e.target.value)} />
+                <label>Enter title</label>
+                <input type="text" placeholder={`Eg. Enter your ${inputType === "short-text" ? "Username" : inputType === "long-text" ? "information" : "age"}`} onChange={e => setTitle(e.target.value)} />
             </div>
             <div className="input">
                 <label>Enter answer</label>
-                <input type="text" placeholder={`Eg. Enter  ${inputType === "short-text" ? "title" : inputType === "long-text" ? "title" : "title"}`} onChange={e => setTitle(e.target.value)} />
+                <input type="text" placeholder={`Eg. Enter  ${inputType === "short-text" ? "answer" : inputType === "long-text" ? "answer" : "answer"}`} onChange={e => setAnswer(e.target.value)} />
             </div>
             <div className="input">
                 <label>Enter marks to be assigned</label>
@@ -45,7 +45,7 @@ function AddTextField({inputType, add, close}){
                 <input type="checkbox" onChange={() => setRequired(!required)} />
             </div>
             {err && <p className="err mb-1">{err}</p>}
-            <button className="btn" onClick={addField}>add question</button>
+            <button className="btn" onClick={addField}>add title</button>
         </div>
     )
 }

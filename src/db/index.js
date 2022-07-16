@@ -1,8 +1,19 @@
 import { useState, useEffect } from "react"
 import { auth, firestore, storage } from "./firebase"
 
-export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim())
-export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim())
+export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim()).then((userCredential)=>{
+  userCredential.user.sendEmailVerification();
+  auth.signOut();
+  alert("Email sent to verify your account. Please check your inbox.");
+})
+.catch(alert);
+export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
+        if(!user.user.emailVerified){
+            auth.signOut();
+            alert("Email not verified, please check mail and verify");
+        }
+    });
+
 export const logout = () => {
     localStorage.setItem("gfc-user", "")
     return auth.signOut()
@@ -22,7 +33,7 @@ export const createForm = formModel => {
 }
 
 export const getForms = async () => {
-    const user = JSON.parse(localStorage.getItem("gfc-user"))
+    const user = auth.currentUser;
     let docs = await firestore.collection("forms").where('uid','==',user.uid).get({})
     docs = docs.docs
     let forms = docs.map(doc => ({...doc.data(), id: doc.id}))
