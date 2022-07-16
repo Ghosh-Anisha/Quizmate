@@ -3,17 +3,22 @@ import { auth, firestore, storage } from "./firebase"
 import * as firebase from "./firebase";
 
 
-export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim())
-export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim())
+export const signup = async (email, pwd) => auth.createUserWithEmailAndPassword(email.trim(), pwd.trim()).then((userCredential)=>{
+    // send verification mail.
+  userCredential.user.sendEmailVerification();
+  auth.signOut();
+  alert("Email sent to verify your account. Please check your inbox.");
+})
+.catch(alert);
 
-export const googleProvider = new firebase.auth.GoogleAuthProvider()
-export const signInWithGoogle = () => {
-  auth.signInWithPopup(googleProvider).then((res) => {
-    console.log(res.user)
-  }).catch((error) => {
-    console.log(error.message)
-  })
-}
+export const login = async (email, pwd) => auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
+        if(!user.user.emailVerified){
+            auth.signOut();
+            alert("Email not verified, please check mail and verify");
+        }
+    });
+
+
 export const logout = () => {
     localStorage.setItem("gfc-user", "")
     return auth.signOut()

@@ -67,7 +67,7 @@ function Create(){
 
     return (
         <div>
-            <h1 className="heading">Create new form</h1>
+            <h1 className="heading">Create new Quiz</h1>
             
             <div className="form">
                 <div className="input">
@@ -84,13 +84,13 @@ function Create(){
 
                 <div className="input">
                     <label>Validity(Optonal)</label>
-                    <input type="number" placeholder="For how many hours the form should be fillable" onKeyDown={e => {if(e.key==='.' || e.key==='-'){e.preventDefault()}}} onChange={e => updateObjState(setFormModel, formModel ,"expiration", e.target.value)} />
+                    <input type="number" placeholder="For how many hours the quiz should be active" onKeyDown={e => {if(e.key==='.' || e.key==='-'){e.preventDefault()}}} onChange={e => updateObjState(setFormModel, formModel ,"expiration", e.target.value)} />
                 </div>
             </div>
 
             <p className="mb-2 text-right">
                 { err && <p className="err text-right mb-1">{err}</p> }
-                <button className="btn" onClick={createForm}>{ loading ? <span className="spinner white"></span> : <span>create form</span>}</button>
+                <button className="btn" onClick={createForm}>{ loading ? <span className="spinner white"></span> : <span>create Quiz</span>}</button>
             </p>
             
             <div className="add-field-container grey-container">

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { validateEmail } from "../utils"
 import { login } from "../db"
+import {auth , provider}  from '../db/firebase.js';
 
 function Login(){
     const [email, setEmail] = useState("")
@@ -33,6 +33,10 @@ function Login(){
         
         
     }
+    const signin = () => {
+        auth.signInWithPopup(provider).catch(alert);
+    }
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -48,6 +52,9 @@ function Login(){
             {err && <p className="err mb-1">{err}</p>}
             <Link to="/signup" className="alt">don't have an account?</Link>
             <button className="btn" type="submit">{ loading ? <span className="spinner white"></span> : <span>login</span>}</button>
+            <button className="btn" onClick={signin}> <img src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg' alt='google' height='12'/>
+{ loading ? <span className="spinner white"></span> : <span> Sign in </span>}</button>
+
         </form>
     )
 }

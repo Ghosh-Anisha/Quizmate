@@ -19,6 +19,7 @@ a{
 .btn{
   border: none;
   outline: none;
+  margin: 2px;
   padding: 1em 2em;
   border-radius: 5px;
   background-color: var(--primary-color);

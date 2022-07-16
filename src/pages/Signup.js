@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { validateEmail } from "../utils"
-import { signup, signInWithGoogle } from "../db"
+import { signup } from "../db"
+import {auth , provider}  from '../db/firebase.js';
+
 
 function Signup(){
     const [email, setEmail] = useState("")
@@ -35,19 +37,15 @@ function Signup(){
             setErr(e.message)
         }
         
-        
+    }
+    const signin = () => {
+        auth.signInWithPopup(provider).catch(alert);
     }
 
     return (
         
         <form onSubmit={handleSubmit}>
             <h1 className="heading mb-1">Create a new account</h1>
-            <div className="login-buttons">
-        <button className="login-provider-button" onClick={signInWithGoogle}>
-        <img src="https://img.icons8.com/ios-filled/50/000000/google-logo.png" alt="google icon"/>
-        <span> Continue with Google</span>
-       </button>
-      </div>
             <div className="input">
                 <label>Email</label>
                 <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} />
@@ -57,12 +55,16 @@ function Signup(){
                 <input type="password" placeholder="Enter your password" onChange={(e) => setPwd(e.target.value)} />
             </div>
             <div className="input">
-                <label>Confir,</label>
+                <label>Confirm Password</label>
                 <input type="password" placeholder="Confirm your password" onChange={(e) => setCpwd(e.target.value)} />
             </div>
+
+
             {err && <p className="err mb-1">{err}</p>}
             <Link to="/login" className="alt">already have an account?</Link>
             <button className="btn" type="submit">{ loading ? <span className="spinner white"></span> : <span>create account</span>}</button>
+            <button className="btn" onClick={signin}> <img src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg' alt='google' height='12'/>
+{ loading ? <span className="spinner white"></span> : <span> Signup</span>}</button>
         </form>
         
     )
