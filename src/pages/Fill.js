@@ -20,7 +20,7 @@ function Fill(){
         if(!localStorage.getItem('gfc-user')) return
         const fetchData = async () => {
             try{
-                let frm = await getForm({id })
+                let frm = await getForm({id: id})
                 setForm(frm)
                 setLoading(false)
             }catch(e){

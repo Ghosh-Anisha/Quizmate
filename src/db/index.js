@@ -17,7 +17,7 @@ export const useAuthenticated = () => {
 }
 
 export const createForm = formModel => {
-    const user = JSON.parse(localStorage.getItem("gfc-user"))
+    const user = auth.currentUser;
     return firestore.collection("forms").add({...formModel, uid: user.uid})
 }
 
@@ -30,8 +30,9 @@ export const getForms = async () => {
 }
 
 export const getForm = async ops => {
-    let docs = await firestore.collection("forms").get(ops)
-    let doc = docs.docs[0]
+    let docs = await firestore.collection("forms").get()
+    let doc = docs.docs.find(doc => doc.id === ops.id)
+    console.log(doc.id)
     doc = {...doc.data(), id: doc.id }
     return doc
 }
