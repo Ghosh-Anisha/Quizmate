@@ -80,7 +80,6 @@ export const uploadFile = (file, fileName) => {
 export const submitForm = async (submission, formId) => {
   let docs = await firestore.collection("forms").get(formId);
   docs = docs.docs;
-  if(firestore.collection("submissions").where("title",'==',submission.title)){
   let formData = docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]["fields"];
 
   let marksObtained = 0;
@@ -104,10 +103,7 @@ export const submitForm = async (submission, formId) => {
     submission,
     formId,
     marksObtained
-  });}
-  else{
-    alert("You have already submitted this quiz once")
-  }
+  });
 };
 
 export const getSubmissions = async (opts) => {
