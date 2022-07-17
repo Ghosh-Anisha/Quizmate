@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { getSubmissions } from "../db"
+import { getSubmissions, getStatistics } from "../db"
 
 import SubmissionCard from "../components/SubmissionCard"
 
@@ -10,6 +10,7 @@ function Submissions(){
     const [loading, setLoading] = useState(true)
     const [msg, setMsg] = useState('')
     const [submissions, setSubmissions] = useState([])
+    const [stats, setStats] = useState();
 
     const { id } = useParams()
 
@@ -18,7 +19,9 @@ function Submissions(){
         const fetchData = async () => {
             try{
                 let sbmns = await getSubmissions({ formID: id })
+                let stats = await getStatistics({ formID: id });
                 setSubmissions(sbmns)
+                setStats(stats);
                 setLoading(false)
             }catch(e){
                 setLoading(false)

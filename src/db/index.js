@@ -82,6 +82,7 @@ export const submitForm = async (submission, formId) => {
   docs = docs.docs;
   let formData = docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]["fields"];
 
+  let marksObtained = 0;
   for (let i = 0; i < formData.length; ++i) {
     if (formData[i]["required"] !== true) {
       formData[i]["required"] = false;
@@ -89,15 +90,19 @@ export const submitForm = async (submission, formId) => {
     if (formData[i]["marks"] == null) {
       formData[i]["marks"] = "0";
     }
-
     submission[i]["required"] = formData[i]["required"];
     submission[i]["marks"] = formData[i]["marks"];
     submission[i]["expectedAnswer"] = formData[i]["answer"] ? formData[i]["answer"] : "NA";
+
+    if (submission[i]["value"] == submission[i]["expectedAnswer"]) {
+      marksObtained += parseInt(submission[i]["marks"])
+    }
   }
 
   firestore.collection("submissions").add({
     submission,
     formId,
+    marksObtained
   });
 };
 
@@ -105,10 +110,32 @@ export const getSubmissions = async (opts) => {
   let docs = await firestore.collection("submissions").get(opts);
   docs = docs.docs;
   let submissions = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  // for (let key in submissions) {
-  //   if (key)
-  //   let submission = submissions[key];
-  // }
-  console.log(submissions);
   return submissions;
 };
+
+export const getStatistics = async (opts) => {
+  let docs = await firestore.collection("submissions").get(opts);
+  docs = docs.docs;
+  let submissions = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  let statistics = {};
+
+  for (let i = 0; i < submissions.length; ++i) {
+    if ("marksObtained" in statistics) {
+      statistics["marksObtained"].push(submissions[i]["marksObtained"]);
+    }
+    else {
+      statistics["marksObtained"] = [`${submissions[i]["marksObtained"]}`];
+    }
+    for (let j = 0; j < submissions[i]["submission"].length; ++j) {
+      for (let key in submissions[i]["submission"][j]) {
+        if (key in statistics) {
+          statistics[key].push(submissions[i]["submission"][j]["value"]);
+        }
+        else {
+          statistics[key] = Array([`${submissions[i]["submission"][j]["value"]}`]);
+        }
+      }
+    }
+  }
+  return statistics;
+}
