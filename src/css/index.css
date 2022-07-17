@@ -307,7 +307,7 @@ input.file{
   color: #fff;
   position: absolute;
   display: flex;
-  bottom: 0;
+  bottom: -1;
   padding-top: max(1.5em, 2vw);
   padding-bottom: max(1.5em, 2vw);
   display: grid;
