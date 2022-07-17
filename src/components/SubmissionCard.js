@@ -1,7 +1,7 @@
-function SubmissionCard({ submission }){
+function SubmissionCard({ submission}){
     return (
         <div className="card">
-            {submission.map((subm, index) => (
+            {submission.submission.map((subm, index) => (
                 <div className="input">
                     <label>{subm.title}</label>
                     {subm.type === "multioption-singleanswer" || subm.type === "multioption-multianswer"
@@ -11,6 +11,7 @@ function SubmissionCard({ submission }){
                     : <p>{subm.value}</p>}
                 </div>
             ))}
+            <p>Marks Obtained : {submission.marksObtained}</p>
         </div>
     )
 }

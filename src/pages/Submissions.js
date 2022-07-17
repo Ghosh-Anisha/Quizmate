@@ -66,11 +66,12 @@ function Submissions(){
             : submissions.length > 0 ? (
                 <>
                     <div className="cards-container submissions">
-                        { submissions.map((subm, index) => <SubmissionCard key={index} submission={subm.submission} /> )}
+                        { submissions.map((subm, index) => <SubmissionCard key={index} submission={subm} /> )}
                     </div>
                     {displayStats()}
                 </>
             ) : <h3 className="msg mt-1">No submissions yet</h3>}
+            <div className="cards-contaner submissions"></div>
 
         </div>
     )
