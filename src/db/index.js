@@ -121,7 +121,7 @@ export const getStatistics = async (opts) => {
 
   for (let i = 0; i < submissions.length; ++i) {
     if ("marksObtained" in statistics) {
-      statistics["marksObtained"].push(submissions[i]["marksObtained"]);
+      statistics["marksObtained"].push(`${submissions[i]["marksObtained"]}`);
     }
     else {
       statistics["marksObtained"] = [`${submissions[i]["marksObtained"]}`];
@@ -129,13 +129,32 @@ export const getStatistics = async (opts) => {
     for (let j = 0; j < submissions[i]["submission"].length; ++j) {
       for (let key in submissions[i]["submission"][j]) {
         if (key in statistics) {
-          statistics[key].push(submissions[i]["submission"][j]["value"]);
+          statistics[key].push(submissions[i]["submission"][j][key]);
         }
         else {
-          statistics[key] = Array([`${submissions[i]["submission"][j]["value"]}`]);
+          statistics[key] = Array(`${submissions[i]["submission"][j][key]}`);
         }
       }
     }
   }
-  return statistics;
+  let stats = {};
+  stats["marksObtained"] = statistics["marksObtained"];
+
+  for (let i = 0; i < statistics["value"].length; ++i) {
+    let title = statistics["title"][i];
+    let value = statistics["value"][i];
+    if (title in stats) {
+      if (value in stats[title]) {
+        stats[title][value]++;
+      }
+      else {
+        stats[title][value] = 1;
+      }
+    }
+    else {
+      stats[title] = {};
+      stats[title][value] = 1;
+    }
+  }
+  return stats;
 }

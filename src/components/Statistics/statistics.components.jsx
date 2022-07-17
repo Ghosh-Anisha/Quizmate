@@ -14,6 +14,21 @@ export const StatisticsPieChart = (props) => {
     );
 };
 
+export const ShowData = (props) => {
+    return (
+        <div>
+            {
+                props.data.map((p) => 
+                    <div>
+                        <p>{p.title}</p>
+                        <StatisticsPieChart data={p.data} />
+                    </div>
+                )
+            }
+        </div>
+    );
+}
+
 export const StatisticsHistogram = (props) => {
     // const labels = ['2016', '2017', '2018'];
     // const data = [324, 45, 672];
