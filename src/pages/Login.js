@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { validateEmail } from "../utils"
 import { login } from "../db"
 import {auth , provider}  from '../db/firebase.js';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function Login(){

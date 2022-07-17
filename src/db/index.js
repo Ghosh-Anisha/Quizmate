@@ -10,15 +10,13 @@ export const signup = async (email, pwd) =>
       userCredential.user.sendEmailVerification();
       auth.signOut();
       alert("Please check your email for verification link");
-      toast.info("Please check your email for verification link");
-      <ToastContainer floatingTime={5000} />;
+      //toast.info("Please check your email for verification link");
     })
     .catch(alert);
 export const login = async (email, pwd) =>
   auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
     if (!user.user.emailVerified) {
-      toast.error("Please verify your email");
-      <ToastContainer />;
+      //toast.error("Please verify your email");
       auth.signOut();
       alert("Please verify your email");
     }
