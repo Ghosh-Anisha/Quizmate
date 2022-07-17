@@ -55,6 +55,15 @@ export const getForm = async (ops) => {
   let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === ops.id);
   doc = { ...doc.data(), id: doc.id };
+  if(new Date(doc.endDate.trim()) < new Date()){
+    alert("Quiz has expired");
+    return;
+  }
+  else if (new Date(doc.startDate.trim()) > new Date()) {
+    alert("Quiz is not yet available");
+    return;
+  }
+  
   return doc;
 };
 

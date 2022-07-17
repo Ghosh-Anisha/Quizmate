@@ -32,7 +32,8 @@ function Create(){
             }
         ],
         endMessage: "",
-        expiration: ""
+        startDate: "",
+        endDate: ""
     })
 
     const addFieldToFormModel = field => {
@@ -50,7 +51,13 @@ function Create(){
         if(!formModel.title.trim()) return setErr("Title is required")
         if(formModel.title.trim().length < 5 || formModel.title.trim().length > 50) return setErr("Title should be 5 - 50 characters long")
 
-        if(formModel.expiration.trim() && formModel.expiration < 1) return setErr("Validity should be at least an hour")
+            // if(formModel.expiration.trim() && formModel.expiration < 1) return setErr("Validity should be at least an hour")
+        if(new Date(formModel.startDate.trim()) && new Date(formModel.endDate.trim()) && new Date(formModel.startDate) > new Date(formModel.endDate)) 
+        return setErr("Start date should be before end date")
+
+        if(new Date(formModel.startDate.trim()) < new Date()) return setErr("Start date should be on or after current date")
+
+        if(new Date(formModel.endDate.trim()) < new Date()) return setErr("End date should be on or after current date")
 
         if(formModel.fields.length < 2) return setErr("You need to add at least one field")
 
@@ -83,9 +90,13 @@ function Create(){
                 </div>
 
                 <div className="input">
-                    <label>Validity</label>
-                    <input type="number" placeholder="For how many hours the quiz should be active" onKeyDown={e => {if(e.key==='.' || e.key==='-'){
-                        e.preventDefault()}}} onChange={e => updateObjState(setFormModel, formModel ,"expiration", e.target.value)} />
+                    <label>Start Date & Time</label>
+                    <input type="datetime-local" placeholder="Start Date and Time"  onChange={e => updateObjState(setFormModel, formModel ,"startDate", e.target.value)} />
+                </div>
+
+                <div className="input">
+                    <label>End Date & Time</label>
+                    <input type="datetime-local" placeholder="End Date and Time"  onChange={e => updateObjState(setFormModel, formModel ,"endDate", e.target.value)} />
                 </div>
             </div>
 
