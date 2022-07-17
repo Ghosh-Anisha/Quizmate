@@ -48,7 +48,7 @@ function FormCard({ form, onDelete }){
 
         </div>
             <p className="card-nav">
-                <span className="nav-item" onClick={() => setPreview(true)}><GrOverview/></span>
+                <span className="nav-item" onClick={() => setPreview(true)} hover='true'><GrOverview/></span>
                 <Link to={"/submissions/" + form.id} className="nav-item"><AiOutlineFundView/></Link>
                 <span className="nav-item" onClick={handleDelete}>{ loading ? <span className="spinner red"></span> : <MdDelete/>} </span>
             </p>
