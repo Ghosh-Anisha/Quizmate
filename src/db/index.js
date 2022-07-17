@@ -89,9 +89,19 @@ export const submitForm = async (submission, formId) => {
   let doc = docs.docs.find((doc) => doc.id === formId);
   let formData = { ...doc.data(), id: doc.id };
   formData = formData["fields"];
-  console.log(formData);
   let marksTotal = 0
   let marksObtained = 0;
+  let submissions = await firestore.collection("submissions").where('formId','==', formId).get();
+  submissions = submissions.docs.map((doc) => doc.data());
+
+  submissions = submissions.filter((doc) => doc['submission'][0].value === submission[0].value);
+  if(submissions.length > 0){
+    alert("You have already submitted this quiz");
+    return;
+  }
+
+  console.log(submissions);
+
   for (let i = 1; i < formData.length; ++i) {
     if (formData[i]["required"] !== true) {
       formData[i]["required"] = false;

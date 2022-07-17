@@ -51,7 +51,6 @@ function Create(){
         if(!formModel.title.trim()) return setErr("Title is required")
         if(formModel.title.trim().length < 5 || formModel.title.trim().length > 50) return setErr("Title should be 5 - 50 characters long")
 
-            // if(formModel.expiration.trim() && formModel.expiration < 1) return setErr("Validity should be at least an hour")
         if(new Date(formModel.startDate.trim()) && new Date(formModel.endDate.trim()) && new Date(formModel.startDate) > new Date(formModel.endDate)) 
         return setErr("Start date should be before end date")
 
