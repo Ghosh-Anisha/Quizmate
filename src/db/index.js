@@ -90,7 +90,7 @@ export const submitForm = async (submission, formId) => {
   let formData = { ...doc.data(), id: doc.id };
   formData = formData["fields"];
   console.log(formData);
-
+  let marksTotal = 0
   let marksObtained = 0;
   for (let i = 1; i < formData.length; ++i) {
     if (formData[i]["required"] !== true) {
@@ -105,13 +105,16 @@ export const submitForm = async (submission, formId) => {
 
     if (submission[i]["value"] == submission[i]["expectedAnswer"]) {
       marksObtained += parseInt(submission[i]["marks"])
+      marksTotal += parseInt(submission[i]['marks'])
     }
+    marksTotal += parseInt(submission[i]['marks'])
   }
 
   firestore.collection("submissions").add({
     submission,
     formId,
-    marksObtained
+    marksObtained,
+    marksTotal
   });
 };
 
