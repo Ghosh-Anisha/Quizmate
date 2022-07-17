@@ -64,7 +64,7 @@ function AddMultiOptionField({ inputType, add, close }){
                 <input type="checkbox" onChange={() => setRequired(!required)} />
             </div>
             {err && <p className="err mb-1">{err}</p>}
-            <button className="btn" onClick={addField}>add field</button>
+            <button className="btn" onClick={addField}>add question</button>
         </div>
     )
 }

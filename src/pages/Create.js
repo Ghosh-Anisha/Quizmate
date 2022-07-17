@@ -78,7 +78,7 @@ function Create(){
             
             <div className="form">
                 <div className="input">
-                    <label>Title of the from</label>
+                    <label>Title of the quiz</label>
                     <input type="text" placeholder="Enter title" onChange={e => updateObjState(setFormModel, formModel ,"title", e.target.value)} />
                 </div>
 
