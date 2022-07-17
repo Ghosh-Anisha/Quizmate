@@ -18,8 +18,8 @@ function Submissions(){
         if(!localStorage.getItem('gfc-user')) return
         const fetchData = async () => {
             try{
-                let sbmns = await getSubmissions({ formID: id })
-                let stats = await getStatistics({ formID: id });
+                let sbmns = await getSubmissions(id)
+                let stats = await getStatistics(id);
                 setSubmissions(sbmns)
                 setStats(stats);
                 setLoading(false)

@@ -76,12 +76,14 @@ export const uploadFile = (file, fileName) => {
 };
 
 export const submitForm = async (submission, formId) => {
-  let docs = await firestore.collection("forms").get(formId);
-  docs = docs.docs;
-  let formData = docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]["fields"];
+  let docs = await firestore.collection("forms").get();
+  let doc = docs.docs.find((doc) => doc.id === formId);
+  let formData = { ...doc.data(), id: doc.id };
+  formData = formData["fields"];
+  console.log(formData);
 
   let marksObtained = 0;
-  for (let i = 0; i < formData.length; ++i) {
+  for (let i = 1; i < formData.length; ++i) {
     if (formData[i]["required"] !== true) {
       formData[i]["required"] = false;
     }
@@ -105,14 +107,14 @@ export const submitForm = async (submission, formId) => {
 };
 
 export const getSubmissions = async (opts) => {
-  let docs = await firestore.collection("submissions").get(opts);
+  let docs = await firestore.collection("submissions").where('formId','==', opts).get();
   docs = docs.docs;
   let submissions = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   return submissions;
 };
 
 export const getStatistics = async (opts) => {
-  let docs = await firestore.collection("submissions").get(opts);
+  let docs = await firestore.collection("submissions").where('formId','==', opts).get(opts);
   docs = docs.docs;
   let submissions = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   let statistics = {};
