@@ -81,7 +81,7 @@ export const submitForm = async (submission, formId) => {
   let docs = await firestore.collection("forms").get(formId);
   docs = docs.docs;
   let formData = docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]["fields"];
-
+  if(firestore.collection.find("title",'==',submission.title)){
   let marksObtained = 0;
   for (let i = 0; i < formData.length; ++i) {
     if (formData[i]["required"] !== true) {
@@ -103,7 +103,10 @@ export const submitForm = async (submission, formId) => {
     submission,
     formId,
     marksObtained
-  });
+  });}
+  else{
+    alert("You've submitted once already");
+  }
 };
 
 export const getSubmissions = async (opts) => {
