@@ -7,11 +7,7 @@ function MultiOptionField({fieldModel, onSelected }){
 
     const addOption = opt => {
         let _selected = [...selected]
-        if(fieldModel.type === "multioption-multianswer"){
-            arrayToggle(_selected, opt)
-        }else{
-            _selected = [opt]
-        }
+        _selected = [opt]
         setSelected(_selected)
         onSelected(_selected)
     }

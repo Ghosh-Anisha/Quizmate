@@ -1,6 +1,5 @@
 import AddTextField from './AddTextField';
 import AddMultiOptionField from './AddMultiOptionField';
-import AddFileField from './AddFileField'
 
 function AddFieldModal({ inputType, add, close }){
     return (
@@ -12,8 +11,6 @@ function AddFieldModal({ inputType, add, close }){
                         <AddTextField inputType={inputType} add={add} close={close} />
                     ) : (["multioption-singleanswer", "multioption-multianswer"].indexOf(inputType) > -1) ? (
                         <AddMultiOptionField inputType={inputType} add={add} close={close} />
-                    ) : (inputType === "file") ? (
-                        <AddFileField inputType={inputType} add={add} close={close} />
                     ) : <p>Unknown type</p>
                 }
             </div>

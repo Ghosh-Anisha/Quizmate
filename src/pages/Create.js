@@ -42,7 +42,7 @@ function Create(){
         setFormModel(_model)
     }
 
-    const inputTypes = ["short-text", "long-text", "number", "multioption-singleanswer", "multioption-multianswer"]
+    const inputTypes = ["short-text", "long-text", "number", "multioption-singleanswer"]
 
     const createForm = async () => {
         if(loading) return

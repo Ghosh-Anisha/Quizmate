@@ -11,6 +11,7 @@ function AddMultiOptionField({ inputType, add, close }){
     const inputRef = createRef()
     const [options, setOptions] = useState([])
     const [option, setOption] = useState("")
+    const[marks, setMarks] = useState("");
 
     const addField = () => {
         if(!title.trim()) return setErr("Title is required")
@@ -21,6 +22,7 @@ function AddMultiOptionField({ inputType, add, close }){
             required,
             options,
             answer,
+            marks,
             type: inputType
         })
         close()
@@ -40,14 +42,14 @@ function AddMultiOptionField({ inputType, add, close }){
         <div>
             <div className="input">
                 <label>Enter field title</label>
-                <input type="text" placeholder={`Eg. Select your ${inputType === "multioption-multianswer" ? "skills" : "gender"}`} onChange={e => setTitle(e.target.value)} />
+                <input type="text" placeholder={`Eg. Select your gender}`} onChange={e => setTitle(e.target.value)} />
             </div>
             { options.length > 0 && (
                 <div className="mb-1">
                     <p className="b">Options</p>
                     { options.map((opt, index) => (
                         <div className="input inline mb-0" key={index}>
-                            <input type={inputType === "multioption-singleanswer" ? "radio" : "checkbox"} className="mr-1" name="inputs" />
+                            <input type={"radio" } className="mr-1" name="inputs" />
                             <label>{opt}</label>
                         </div>
                     )) }
@@ -55,9 +57,15 @@ function AddMultiOptionField({ inputType, add, close }){
             )}
             <div className="input grey-container p-1">
                 <input type="text" className="mb-1" placeholder="Enter a option" onChange={e => setOption(e.target.value)} ref={inputRef} />
-                <input type= "text" className="mb-1" placeholder="Enter answer" onChange={e=> setAnswer(e.target.value)} ref={inputRef} />
                 {opterr && <p className="err mb-1 text-small">{opterr}</p>}
                 <button class="btn" onClick={addOption}>Add Option</button>
+            </div>
+            <div className="input">
+                <input type= "text" className="mb-1" placeholder="Enter answer" onChange={e=> setAnswer(e.target.value)} ref={inputRef} />
+            </div>
+            <div className="input">
+                <label>Enter marks to be assigned</label>
+                <input type='number' placeholder="Enter marks" onChange={e => setMarks(e.target.value)} />
             </div>
             <div className="input inline">
                 <label>Required: </label>
