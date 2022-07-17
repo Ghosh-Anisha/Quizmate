@@ -115,7 +115,6 @@ export const submitForm = async (submission, formId) => {
 
     if (submission[i]["value"] == submission[i]["expectedAnswer"]) {
       marksObtained += parseInt(submission[i]["marks"])
-      marksTotal += parseInt(submission[i]['marks'])
     }
     marksTotal += parseInt(submission[i]['marks'])
   }
