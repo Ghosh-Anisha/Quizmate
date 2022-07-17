@@ -7,6 +7,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body{
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
@@ -299,7 +305,7 @@ input.file{
 .footer{
   background-color: var(--primary-color);
   color: #fff;
-  position: -webkit-sticky;
+  position: absolute;
   display: flex;
   bottom: 0;
   padding-top: max(1.5em, 2vw);
