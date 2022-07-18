@@ -308,6 +308,7 @@ input.file{
   position: absolute;
   display: flex;
   bottom: -1;
+  width: 100%;
   padding-top: max(1.5em, 2vw);
   padding-bottom: max(1.5em, 2vw);
   display: grid;

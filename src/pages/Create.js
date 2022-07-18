@@ -26,7 +26,7 @@ function Create(){
         createdAt: +(new Date()),
         fields: [
             {
-                title: "Enter your email",
+                title: "Enter your name",
                 type: "short-text",
                 required: true
             }
@@ -73,11 +73,11 @@ function Create(){
 
     return (
         <div>
-            <h1 className="heading">Create new Quiz</h1>
+            <h1 className="heading">Create new Form</h1>
             
             <div className="form">
                 <div className="input">
-                    <label>Title of the quiz</label>
+                    <label>Title of the Survey</label>
                     <input type="text" placeholder="Enter title" onChange={e => updateObjState(setFormModel, formModel ,"title", e.target.value)} />
                 </div>
 
@@ -101,7 +101,7 @@ function Create(){
 
             <p className="mb-2 text-right">
                 { err && <p className="err text-right mb-1">{err}</p> }
-                <button className="btn" onClick={createForm}>{ loading ? <span className="spinner white"></span> : <span>create Quiz</span>}</button>
+                <button className="btn" onClick={createForm}>{ loading ? <span className="spinner white"></span> : <span>create form</span>}</button>
             </p>
             
             <div className="add-field-container grey-container">

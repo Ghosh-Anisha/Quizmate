@@ -11,7 +11,6 @@ function SubmissionCard({ submission}){
                     : <p>{subm.value}</p>}
                 </div>
             ))}
-            <p>Marks Obtained : {submission.marksObtained} / {submission.marksTotal}</p>
         </div>
     )
 }
