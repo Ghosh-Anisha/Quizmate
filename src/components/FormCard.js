@@ -43,7 +43,7 @@ function FormCard({ form, onDelete }){
             </h2>
 
         <div>
-        <a href={`${window.location.origin}/fill/${form.id}`} class="button" className='btn'>Take Quiz</a> &nbsp; &nbsp;
+        <a href={`${window.location.origin}/fill/${form.id}`} class="button" className='btn'>Take Survey</a> &nbsp; &nbsp;
         <MdOutlineContentCopy onClick={()=>onClickHandler()}/>         <ToastContainer floatingTime={5000}/>
 
         </div>
