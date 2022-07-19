@@ -29,7 +29,7 @@ function Navbar(){
             <nav className="nav">
                 { user ? (
                     <span>
-                        <Link to="/" className='brand'>Quizmate</Link>
+                        <Link to="/" className='brand'>Neural Correlates</Link>
                         <Link to="/forms">My Quizzes</Link>
                         <Link to="/create">Create</Link>
                         <span onClick={logout}>Logout</span>

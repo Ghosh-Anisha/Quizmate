@@ -1,7 +1,9 @@
 :root{
   --primary-color: #982450;
   --clr-red: #ee0014;
+  --clr-test: #335ccc;
 }
+
 *{
   margin: 0;
   padding: 0;
@@ -10,7 +12,8 @@
 
 html {
   position: relative;
-  min-height: 100%;
+  min-height: 100vh;
+  min-width: 100%;
 }
 
 body{
@@ -109,6 +112,7 @@ label.btn{
 }
 .container.main{
   padding: 3vw var(--container-px);
+  min-height: 100vh;
 }
 
 
@@ -181,7 +185,7 @@ label.btn{
 }
 .add-field-container p{
   font-size: 1.2em;
-  margin-bottom: 1em;
+  margin-bottom: 40px;
 }
 .add-field-container .btn{
   margin: 0 0.5em 0.5em 0;
@@ -305,13 +309,14 @@ input.file{
 .footer{
   background-color: var(--primary-color);
   color: #fff;
-  position: absolute;
+  position: relative;
   display: flex;
-  bottom: -1;
+  bottom: 0;
   padding-top: max(1.5em, 2vw);
   padding-bottom: max(1.5em, 2vw);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  width: 100%;
 }
 .footer .title{
   color: #fff;
