@@ -28,13 +28,8 @@ function Navbar(){
             <nav className="nav">
                 { user ? (
                     <span>
-<<<<<<< HEAD
-                        <Link to="/" className='brand'>Neural Correlates</Link>
-                        <Link to="/forms">My Quizzes</Link>
-=======
                         <Link to="/" className='brand'>FORM EZ</Link>
                         <Link to="/forms">My Forms</Link>
->>>>>>> 7127c50c0782847dfdf2e9f3a99180020a3ec073
                         <Link to="/create">Create</Link>
                         <span onClick={logout}>Logout</span>
                     </span>
