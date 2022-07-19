@@ -5,10 +5,6 @@ function AddTextField({inputType, add, close}){
 
     const [title, setTitle] = useState("")
 
-    const [answer, setAnswer] = useState("")
-
-    const [marks, setMarks] = useState()
-
 
     const [required, setRequired] = useState(false)
 
@@ -18,9 +14,7 @@ function AddTextField({inputType, add, close}){
 
         add({
             title,
-            answer,
             required,
-            marks,
             type: inputType
         })
         close()
@@ -32,14 +26,7 @@ function AddTextField({inputType, add, close}){
                 <label>Enter title</label>
                 <input type="text" placeholder={`Eg. Enter your ${inputType === "short-text" ? "Username" : inputType === "long-text" ? "information" : "age"}`} onChange={e => setTitle(e.target.value)} />
             </div>
-            <div className="input">
-                <label>Enter answer</label>
-                <input type="text" placeholder={`Eg. Enter  ${inputType === "short-text" ? "answer" : inputType === "long-text" ? "answer" : "answer"}`} onChange={e => setAnswer(e.target.value)} />
-            </div>
-            <div className="input">
-                <label>Enter marks to be assigned</label>
-                <input type='number' placeholder={`Eg. Enter ${inputType === "short-text" ? "marks" : inputType === "long-text" ? "marks" : "marks"}`} onChange={e => setMarks(e.target.value)} />
-            </div>
+
             <div className="input inline">
                 <label>Required: </label>
                 <input type="checkbox" onChange={() => setRequired(!required)} />

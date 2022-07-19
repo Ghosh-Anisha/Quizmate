@@ -56,11 +56,11 @@ export const getForm = async (ops) => {
   let doc = docs.docs.find((doc) => doc.id === ops.id);
   doc = { ...doc.data(), id: doc.id };
   if(new Date(doc.endDate.trim()) < new Date()){
-    alert("Quiz has expired on" + new Date(doc.endDate.trim()));
+    alert("Survey has expired on" + new Date(doc.endDate.trim()));
     return;
   }
   else if (new Date(doc.startDate.trim()) > new Date()) {
-    alert("Quiz is not yet available, come back at " + new Date(doc.startDate.trim()));
+    alert("Survey is not yet available, come back at " + new Date(doc.startDate.trim()));
     return;
   }
   
