@@ -1,4 +1,4 @@
-![OpenUI5 logo](https://img.icons8.com/color/48/000000/neural_connections.png)
+![OpenUI5 logo]([https://img.icons8.com/color/48/000000/neural_connections.png](https://img.icons8.com/color/96/000000/neural_connections.png))
 
 # Neural Correlates
 Free Form app to conduct and share surveys online
