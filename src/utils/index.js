@@ -1,8 +1,11 @@
+const {Parser} = require('json2csv');
+
 export const updateObjState = (setter, model, prop, val) => {
     let _model = Object.assign({}, model)
     _model[prop] = val
     setter(_model)
 }
+
 export const updateArrOfObjState = (setter, model, index, prop, val) => {
     let _model = [...model]
     _model[index] = Object.assign({}, _model[index], { [prop]: val })

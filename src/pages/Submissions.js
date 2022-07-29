@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { useParams } from 'react-router-dom'
 
 import { getSubmissions, getStatistics } from "../db"
 
-import  {randomColor} from '../utils/randomColor';
+import {randomColor} from '../utils/randomColor';
 
 import SubmissionCard from "../components/SubmissionCard"
+import { CSVLink } from 'react-csv';
 import { ShowData } from '../components/Statistics/statistics.components';
 
 function Submissions(){
@@ -14,24 +15,49 @@ function Submissions(){
     const [msg, setMsg] = useState('')
     const [submissions, setSubmissions] = useState([])
     const [stats, setStats] = useState();
+    const [csvHeaders, setCsvHeaders] = useState('');
+    const [csvData, setCsvData] = useState('');
+    const csv = useRef(null);
 
     const { id } = useParams()
+
+    const getCSV = async (sbmns) => {
+        let titles = [];
+        let answers = [];
+        let csvAnswers = '';
+        let csvTitles = '';
+        for(let i = 0; i < sbmns[0]["submission"].length; ++i){
+            titles.push(sbmns[0]["submission"][i]["title"]);
+        }
+        for(let i = 0; i < sbmns[0]["submission"].length; ++i){
+            answers.push(sbmns[0]["submission"][i]["value"]);
+        }
+        csvTitles  += titles.join(',') + '\n';
+        csvAnswers += answers.join(',') + '\n';
+        console.log(csvTitles, csvAnswers);
+        setCsvData(csvTitles + csvAnswers);
+        //setCsvHeaders(csvTitles);
+    }
 
     useEffect(() => {
         if(!localStorage.getItem('gfc-user')) return
         const fetchData = async () => {
             try{
-                let sbmns = await getSubmissions(id)
+                let sbmns = await getSubmissions(id);
                 let stats = await getStatistics(id);
+                let csvStr = '';
                 setSubmissions(sbmns)
                 setStats(stats);
-                setLoading(false)
+                setLoading(false);
             }catch(e){
                 setLoading(false)
                 setMsg(e.message)
             }
         }
         fetchData()
+        getSubmissions(id).then(sbmns => {
+            getCSV(sbmns);
+        })
     }, [id])
 
     const displayStats = () => {
@@ -52,10 +78,14 @@ function Submissions(){
             }
             fullData.push({title: q, data:data});
         }
-        console.log(fullData);
+        //console.log(toCsv(data));
         return (
             <ShowData data={fullData} />
         );
+    }
+
+    const downloadReport = async () => {
+        csv.current.link.click();
     }
 
     return (
@@ -72,7 +102,13 @@ function Submissions(){
                 </>
             ) : <h3 className="msg mt-1">No submissions yet</h3>}
             <div className="cards-contaner submissions"></div>
-
+            <button className='btn' type="button" value="Export to Excel" onClick={downloadReport} ><span>Export to Excel</span></button>
+            <CSVLink
+                headers={csvHeaders}
+                filename={`${id}.csv`}
+                data={csvData}
+                ref={csv}
+            />
         </div>
     )
 }
