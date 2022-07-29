@@ -6,6 +6,8 @@ function AddMultiOptionField({ inputType, add, close }){
     const [title, setTitle] = useState("")
     const [required, setRequired] = useState(false)
     const inputRef = createRef()
+    const [answer,setAnswer] = useState("")
+    const [marks,setMarks] = useState("")
     const [options, setOptions] = useState([])
     const [option, setOption] = useState("")
 
@@ -17,6 +19,8 @@ function AddMultiOptionField({ inputType, add, close }){
             title,
             required,
             options,
+            answer,
+            marks,
             type: inputType
         })
         close()
@@ -53,6 +57,13 @@ function AddMultiOptionField({ inputType, add, close }){
                 <input type="text" className="mb-1" placeholder="Enter a option" onChange={e => setOption(e.target.value)} ref={inputRef} />
                 {opterr && <p className="err mb-1 text-small">{opterr}</p>}
                 <button class="btn" onClick={addOption}>Add Option</button>
+            </div>
+            <div className="input inline">
+                <input type="text" className="mb-1" placeholder="Enter answer" onChange={e => setAnswer(e.target.value)}/>
+            </div>
+            <div className="input">
+                <label>Enter marks to be assigned</label>
+                <input type='number' placeholder="Enter marks" onChange={e => setMarks(e.target.value)} />
             </div>
             <div className="input inline">
                 <label>Required: </label>
