@@ -47,7 +47,13 @@ function RenderReactiveForm({ model, onSubmitted }){
                 </div>
             ) : field.type === "multioption-singleanswer" ? (
                 <MultiOptionField key={index} fieldModel={field} onSelected={res => updateArrOfObjState(setFillableModel, fillableModel, index, "value", res)} />
-            ) : <p key={index}>Unknown field type</p>)}
+            ) : field.type === "slider"?(
+                <div key={index} className="input">
+                <label>{field.title}{field.required && <span className="err">*</span>}</label>
+                <input type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                </div>
+            )
+            : <p key={index}>Unknown field type</p>)}
             {err && <p className="err mb-1">{err}</p>}
             <button className="btn" onClick={handleSubmit}>{ loading ? <span className="spinner white"></span> : <span>submit</span>}</button>
         </div>

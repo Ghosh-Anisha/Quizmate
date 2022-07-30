@@ -35,6 +35,13 @@ function RenderPlainForm({ model }){
                         )) }
                     </div>
                 )
+                : field.type === "slider" ? 
+                (
+                    <div>
+                        <label>{field.title}{field.required && <span className="err">*</span>}</label>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
+                    </div>
+                )
                 : <p key={index}>Unknown fiel type.</p>
             )}
             <button className="btn mt-1">submit</button>
