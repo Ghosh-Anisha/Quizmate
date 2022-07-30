@@ -10,8 +10,38 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [fillableModel, setFillableModel] = useState(createFillableModel(model))
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
+    var Status = {};
+
+    var inputs = document.getElementsByTagName('input');
+    
+    var focusHandler = function() {
+        var name = this.name;
+        console.log("Focus", name, Status[name]);
+        if (!Status[name]) Status[name] = {
+            total: 0,
+            focus: Date.now()
+        }
+        else Status[name].focus = Date.now();
+    }
+    var blurHandler = function() {
+        var name = this.name;
+        if (Status[name]) {
+            Status[name].total += Date.now() - Status[name].focus;
+        }
+    }
+    
+    for (var i = 0, l = inputs.length; i < l; i++) {
+        console.log(inputs.length);
+        inputs[i].onfocus = focusHandler;
+        inputs[i].onblur = blurHandler;
+    }
+    
+    document.getElementsByTagName('button').onclick = function() {
+        console.log(Status);
+    };
 
     const handleSubmit = async () => {
+
         setErr("")
         if(loading) return
 
@@ -32,13 +62,14 @@ function RenderReactiveForm({ model, onSubmitted }){
         }
     }
 
+
     return (
         <div className="main-form mt-1">
             { fillableModel.map((field, index) => ["short-text", "number"].indexOf(field.type) > -1
             ? (
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
-                    <input type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                    <input name='short' type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
                 </div>
             ) : field.type === "long-text" ? (
                 <div key={index} className="input">
@@ -50,7 +81,7 @@ function RenderReactiveForm({ model, onSubmitted }){
             ) : field.type === "slider"?(
                 <div key={index} className="input">
                 <label>{field.title}{field.required && <span className="err">*</span>}</label>
-                <input type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                <input name="slide" type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
                 </div>
             )
             : <p key={index}>Unknown field type</p>)}
