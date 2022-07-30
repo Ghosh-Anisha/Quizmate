@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { createFillableModel, createSubmitableModel, updateArrOfObjState, hasError } from "../utils"
 
@@ -10,38 +10,55 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [fillableModel, setFillableModel] = useState(createFillableModel(model))
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
+    const [time, setTime] = useState(Date.now());
+    const [status, setStatus] = useState([]);
     var Status = {};
-
     var inputs = document.getElementsByTagName('input');
     
-    var focusHandler = function() {
-        var name = this.name;
+    var focusHandler = function(e) {
+        var name = e.target.name;
         console.log("Focus", name, Status[name]);
-        if (!Status[name]) Status[name] = {
-            total: 0,
-            focus: Date.now()
+        if (!Status[name]){
+                Status[name] = {
+                total: 0,
+                focus: Date.now()
+            }
+            let newStatus = [...status, Status[name]]
+            setStatus(newStatus);
         }
-        else Status[name].focus = Date.now();
+        else {
+            Status[name].focus = Date.now();
+            let newStatus = [...status, Status[name]]
+            setStatus(newStatus);
+        }
     }
-    var blurHandler = function() {
-        var name = this.name;
+    var blurHandler = function(e) {
+        var name = e.target.name;
         if (Status[name]) {
             Status[name].total += Date.now() - Status[name].focus;
+            let newStatus = [...status, Status[name]];
+            setStatus(newStatus);
         }
     }
     
-    for (var i = 0, l = inputs.length; i < l; i++) {
+    for (var i = 0; i < inputs.length; i++) {
         console.log(inputs.length);
         inputs[i].onfocus = focusHandler;
         inputs[i].onblur = blurHandler;
     }
     
-    document.getElementsByTagName('button').onclick = function() {
-        console.log(Status);
-    };
+    // document.getElementsByTagName('button').onclick = function() {
+    //     console.log(Status);
+    // };
 
     const handleSubmit = async () => {
-
+        console.log(status);
+        console.log(Date.now(), time);
+        console.log('time spent = ' + ((Date.now() - time)/1000).toString());
+        let finalTime = (Date.now() - time);
+        console.log(finalTime)
+        //setTime(finalTime);
+        console.log(time)
         setErr("")
         if(loading) return
 
@@ -53,7 +70,7 @@ function RenderReactiveForm({ model, onSubmitted }){
         let submitableModel = createSubmitableModel(fillableModel)
         
         try{
-            await submitForm(submitableModel, model.id)
+            await submitForm(submitableModel, model.id, finalTime / 1000)
             setLoading(false)
             onSubmitted()
         }catch(e){
@@ -62,14 +79,13 @@ function RenderReactiveForm({ model, onSubmitted }){
         }
     }
 
-
     return (
         <div className="main-form mt-1">
             { fillableModel.map((field, index) => ["short-text", "number"].indexOf(field.type) > -1
             ? (
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
-                    <input name='short' type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                    <input name={field.type === "number" ? "number" : "short"} type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
                 </div>
             ) : field.type === "long-text" ? (
                 <div key={index} className="input">

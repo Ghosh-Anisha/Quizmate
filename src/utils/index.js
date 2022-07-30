@@ -51,7 +51,7 @@ export const createFillableModel = model => {
         //     value: fld.type === "multioption-singleanswer" || fld.type === "multioption-multianswer" ? [] : ""
         // }
         // fillableModel.push(fieldModel)
-        fillableModel.push({...fld, value: fld.type === "multioption-singleanswer" || fld.type === "multioption-multianswer" ? [] : ""})
+        fillableModel.push({...fld, value: fld.type === "multioption-singleanswer" || fld.type === "multioption-multianswer" ? [] : "", time: 0})
     }
     return fillableModel
 }

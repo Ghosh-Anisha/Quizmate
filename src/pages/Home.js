@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 function Home(){
     return <div>
         <div className="section">
-            <img src="https://blush.design/api/download?shareUri=Vvv00XfNi&bg=ffffff&w=800&h=800&fm=png" alt="banner" />
+            <img src="https://blush.design/api/download?shareUri=Vvv00XfNi&bg=ffffff&w=800&h=800&fm=png" alt="banner" style={{minHeight: "700px"}}/>
             <div className="content">
                 <h1>Create & Share <span>Forms</span> easily</h1>
                 <p>Neural Corelates lets you create forms super easily! Create questions of various types with flexible schemes, Share the link of your form with others and see thier submissions along with analytics.</p>
@@ -20,7 +20,7 @@ function Home(){
                     <span className="li">No login required for taking part in the survey</span>
                 </p>
             </div>
-            <img src='https://blush.design/api/download?shareUri=KPFZytjWt&bg=ffffff&w=800&h=800&fm=png' alt="features" />
+            <img src='https://blush.design/api/download?shareUri=KPFZytjWt&bg=ffffff&w=800&h=800&fm=png' alt="features" style={{minHeight: "700px"}}/>
         </div>
     </div>
 }

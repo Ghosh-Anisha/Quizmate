@@ -32,7 +32,8 @@ function Submissions(){
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
             answers.push(sbmns[0]["submission"][i]["value"]);
         }
-        csvTitles  += titles.join(',') + '\n';
+        answers.push(sbmns[0]['time']);
+        csvTitles  += titles.join(',') + ',time\n';
         csvAnswers += answers.join(',') + '\n';
         console.log(csvTitles, csvAnswers);
         setCsvData(csvTitles + csvAnswers);
@@ -44,6 +45,7 @@ function Submissions(){
         const fetchData = async () => {
             try{
                 let sbmns = await getSubmissions(id);
+                console.log(sbmns);
                 let stats = await getStatistics(id);
                 let csvStr = '';
                 setSubmissions(sbmns)
