@@ -10,8 +10,11 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [fillableModel, setFillableModel] = useState(createFillableModel(model))
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
+    const [time1, setTime1] = useState([]);
+    const [time2, setTime2] = useState([]);
     const [diff,setDiff] = useState(0)
-    const [time, setTime] = useState(Date.now());
+    const [hard,setHard] = useState([])
+    
     const [status, setStatus] = useState([]);
     
     /*
@@ -54,29 +57,18 @@ function RenderReactiveForm({ model, onSubmitted }){
     // };
     */
    const startTime =  () => {
-        var time1 = Date.now();
-        console.log(time1)
-        setTime(time1);
-        console.log(time);
+        setTime1([...time1,Date.now()]);
+        console.log(time1);
    }
 
    const endTime =   () => {
-        var time2 = Date.now();
-        console.log(time2)
-        setDiff(time2 - time)
-        setStatus([...status,diff/1000])
-        console.log(diff)
+        setTime2([...time2,Date.now()]);
+        console.log(time2);
+        console.log(time2-time1);
    }
 
 
     const handleSubmit = async () => {
-        console.log(status);
-        console.log(Date.now(), time);
-        console.log('time spent = ' + ((Date.now() - time)/1000).toString());
-        let finalTime = (Date.now() - time);
-        console.log(finalTime)
-        //setTime(finalTime);
-        console.log(time)
         setErr("")
         if(loading) return
 
@@ -87,7 +79,7 @@ function RenderReactiveForm({ model, onSubmitted }){
         let submitableModel = createSubmitableModel(fillableModel)
         
         try{
-            await submitForm(submitableModel, model.id,status)
+            await submitForm(submitableModel, model.id,time1,time2,hard)
             setLoading(false)
             onSubmitted()
         }catch(e){
@@ -107,6 +99,10 @@ function RenderReactiveForm({ model, onSubmitted }){
                     <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
                     <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
                     </div>
+                    <div className="input">
+                    <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
+                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
+                    </div>
                 </div>
             ) : field.type=== "mandatory" ?(
                 <div key = {index} className="input">
@@ -121,6 +117,10 @@ function RenderReactiveForm({ model, onSubmitted }){
                     <div>
                     <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
                     <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    <div className="input">
+                    <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
+                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
+                    </div>
                     </div>
                 </div>
             ) : field.type === "multioption-singleanswer" ? (
@@ -132,6 +132,10 @@ function RenderReactiveForm({ model, onSubmitted }){
                 <div>
                 <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
                     <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    </div>
+                    <div className="input">
+                    <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
+                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
                     </div>
                 </div>
             )
