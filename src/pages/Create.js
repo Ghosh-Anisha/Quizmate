@@ -27,7 +27,12 @@ function Create(){
         fields: [
             {
                 title: "Enter your name",
-                type: "short-text",
+                type: "mandatory",
+                required: true
+            },
+            {
+                title: "Enter your email",
+                type:"mandatory",
                 required: true
             }
         ],
@@ -42,7 +47,7 @@ function Create(){
         setFormModel(_model)
     }
 
-    const inputTypes = ["short-text", "long-text", "number", "multioption-singleanswer","slider"]
+    const inputTypes = ["mandatory","short-text", "long-text", "number", "multioption-singleanswer","slider"]
 
     const createForm = async () => {
         if(loading) return

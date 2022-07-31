@@ -84,7 +84,7 @@ export const uploadFile = (file, fileName) => {
   return ref.put(file);
 };
 
-export const submitForm = async (submission, formId, time) => {
+export const submitForm = async (submission, formId, status) => {
   let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === formId);
   let formData = { ...doc.data(), id: doc.id };
@@ -124,7 +124,7 @@ export const submitForm = async (submission, formId, time) => {
     formId,
     marksObtained,
     marksTotal,
-    time
+    status
   });
 };
 
