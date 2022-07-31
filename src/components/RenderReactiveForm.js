@@ -53,18 +53,19 @@ function RenderReactiveForm({ model, onSubmitted }){
     //     console.log(Status);
     // };
     */
-   const startTime = async () => {
+   const startTime =  () => {
         var time1 = Date.now();
         console.log(time1)
         setTime(time1);
         console.log(time);
    }
 
-   const endTime =  async () => {
+   const endTime =   () => {
         var time2 = Date.now();
         console.log(time2)
         setDiff(time2 - time)
-        setStatus([...status,diff])
+        setStatus([...status,diff/1000])
+        console.log(diff)
    }
 
 
@@ -80,14 +81,13 @@ function RenderReactiveForm({ model, onSubmitted }){
         if(loading) return
 
         let error = hasError(fillableModel, model.id)
-        if(error) return setErr(error)
-
+        if(error) return setErr(error) 
         setLoading(true)
 
         let submitableModel = createSubmitableModel(fillableModel)
         
         try{
-            await submitForm(submitableModel, model.id, finalTime)
+            await submitForm(submitableModel, model.id,status)
             setLoading(false)
             onSubmitted()
         }catch(e){
