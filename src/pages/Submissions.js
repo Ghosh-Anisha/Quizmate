@@ -27,14 +27,25 @@ function Submissions(){
         let csvAnswers = '';
         let csvTitles = '';
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
-            titles.push(sbmns[0]["submission"][i]["title"]);
+            if(i > 1){
+                titles.push(sbmns[0]["submission"][i]["title"]);
+                titles.push('time for question ' + (i - 1));
+            } else {
+                titles.push(sbmns[0]["submission"][i]["title"]);
+            }
         }
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
-            answers.push(sbmns[0]["submission"][i]["value"]);
-            answers.push(sbmns[0]["status"][i]);
+            if(i > 1){
+                answers.push(sbmns[0]["submission"][i]["value"])
+                answers.push(sbmns[0]['diff'][i - 2]);
+            } else {
+                answers.push(sbmns[0]["submission"][i]["value"]);
+            }
+            //answers.push(sbmns[0]["submission"][i]["value"] + sbmns[0]['diff'][i]);
+            //answers.push(sbmns[0]["status"][i]);
         }
         
-        csvTitles  += titles.join(',') + ',time\n';
+        csvTitles  += titles.join(',') + '\n';
         csvAnswers += answers.join(',') + '\n';
         console.log(csvTitles, csvAnswers);
         setCsvData(csvTitles + csvAnswers);
