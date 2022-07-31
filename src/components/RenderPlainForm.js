@@ -9,7 +9,11 @@ function RenderPlainForm({ model }){
                         <input type={field.type} />
                     </div>
                 )
-                : field.type === "long-text" ? 
+                : field.type==="mandatory" ? (<div key={index} className="input">
+                    <label>{field.title}{field.required && <span className="err">*</span>}</label>
+                        <input type={field.type} />
+                </div>)
+                :field.type === "long-text" ? 
                 (
                     <div key={index} className="input">
                         <label>{field.title}{field.required && <span className="err">*</span>}</label>

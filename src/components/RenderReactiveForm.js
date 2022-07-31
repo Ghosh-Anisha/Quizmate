@@ -10,11 +10,13 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [fillableModel, setFillableModel] = useState(createFillableModel(model))
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
+    const [diff,setDiff] = useState(0)
     const [time, setTime] = useState(Date.now());
     const [status, setStatus] = useState([]);
+    
+    /*
     var Status = {};
     var inputs = document.getElementsByTagName('input');
-    
     var focusHandler = function(e) {
         var name = e.target.name;
         console.log("Focus", name, Status[name]);
@@ -50,6 +52,21 @@ function RenderReactiveForm({ model, onSubmitted }){
     // document.getElementsByTagName('button').onclick = function() {
     //     console.log(Status);
     // };
+    */
+   const startTime = async () => {
+        var time1 = Date.now();
+        console.log(time1)
+        setTime(time1);
+        console.log(time);
+   }
+
+   const endTime =  async () => {
+        var time2 = Date.now();
+        console.log(time2)
+        setDiff(time2 - time)
+        setStatus([...status,diff])
+   }
+
 
     const handleSubmit = async () => {
         console.log(status);
@@ -70,7 +87,7 @@ function RenderReactiveForm({ model, onSubmitted }){
         let submitableModel = createSubmitableModel(fillableModel)
         
         try{
-            await submitForm(submitableModel, model.id, finalTime / 1000)
+            await submitForm(submitableModel, model.id, finalTime)
             setLoading(false)
             onSubmitted()
         }catch(e){
@@ -86,11 +103,25 @@ function RenderReactiveForm({ model, onSubmitted }){
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <input name={field.type === "number" ? "number" : "short"} type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                    <div>
+                    <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    </div>
                 </div>
-            ) : field.type === "long-text" ? (
+            ) : field.type=== "mandatory" ?(
+                <div key = {index} className="input">
+                    <label>{field.title}{field.required && <span className="err">*</span>}</label>
+                    <input name="mand" type = "text" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                </div>
+            )
+            :field.type === "long-text" ? (
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <textarea onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)}></textarea>
+                    <div>
+                    <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    </div>
                 </div>
             ) : field.type === "multioption-singleanswer" ? (
                 <MultiOptionField key={index} fieldModel={field} onSelected={res => updateArrOfObjState(setFillableModel, fillableModel, index, "value", res)} />
@@ -98,6 +129,10 @@ function RenderReactiveForm({ model, onSubmitted }){
                 <div key={index} className="input">
                 <label>{field.title}{field.required && <span className="err">*</span>}</label>
                 <input name="slide" type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                <div>
+                <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    </div>
                 </div>
             )
             : <p key={index}>Unknown field type</p>)}
