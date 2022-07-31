@@ -10,8 +10,9 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [fillableModel, setFillableModel] = useState(createFillableModel(model))
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState("")
-    const [diff,setDiff] = useState(0)
-    const [time, setTime] = useState(Date.now());
+    const [time1, setTime1] = useState(Date.now());
+    const [time2, setTime2] = useState(Date.now());
+    const [diff,setDiff] = useState(time2 - time1)
     const [status, setStatus] = useState([]);
     
     /*
@@ -54,29 +55,30 @@ function RenderReactiveForm({ model, onSubmitted }){
     // };
     */
    const startTime =  () => {
-        var time1 = Date.now();
-        console.log(time1)
-        setTime(time1);
-        console.log(time);
+        var time4 = Date.now();
+        console.log(time4)
+        setTime1(time4);
+        console.log(time1);
    }
 
    const endTime =   () => {
-        var time2 = Date.now();
-        console.log(time2)
-        setDiff(time2 - time)
+        var time3 = Date.now();
+        setTime2(time3);
+        console.log(time3)
+        setDiff(time2 - time1)
         setStatus([...status,diff/1000])
-        console.log(diff)
+        console.log('difference in time ' + diff)
    }
 
 
     const handleSubmit = async () => {
         console.log(status);
-        console.log(Date.now(), time);
-        console.log('time spent = ' + ((Date.now() - time)/1000).toString());
-        let finalTime = (Date.now() - time);
-        console.log(finalTime)
+        // console.log(Date.now(), time);
+        // console.log('time spent = ' + ((Date.now() - time)/1000).toString());
+        // let finalTime = (Date.now() - time);
+        // console.log(finalTime)
         //setTime(finalTime);
-        console.log(time)
+        // console.log(time)
         setErr("")
         if(loading) return
 
