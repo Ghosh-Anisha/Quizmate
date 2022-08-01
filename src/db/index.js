@@ -122,7 +122,7 @@ export const submitForm = async (submission, formId, time1,time2,hard) => {
   for(let i = 0; i < time1.length; i++) {
     diff.push((time2[i]-time1[i])/1000)
   }
-
+  console.log(hard);
   firestore.collection("submissions").add({
     submission,
     formId,

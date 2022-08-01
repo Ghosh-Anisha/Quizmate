@@ -34,6 +34,11 @@ function Create(){
                 title: "Enter your email",
                 type:"mandatory",
                 required: true
+            },
+            {
+                title: "Enter tool used",
+                type:"mandatory",
+                required: true
             }
         ],
         endMessage: "",

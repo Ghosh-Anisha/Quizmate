@@ -92,6 +92,7 @@ function RenderReactiveForm({ model, onSubmitted }){
         <div className="main-form mt-1">
             { fillableModel.map((field, index) => ["short-text", "number"].indexOf(field.type) > -1
             ? (
+                <div className="grey-container mb-1">
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <input name={field.type === "number" ? "number" : "short"} type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
@@ -101,8 +102,9 @@ function RenderReactiveForm({ model, onSubmitted }){
                     </div>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
-                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
+                    <input type= "number" onChange = {e =>  setHard([...hard,e.target.value])} />
                     </div>
+                </div>
                 </div>
             ) : field.type=== "mandatory" ?(
                 <div key = {index} className="input">
@@ -111,6 +113,7 @@ function RenderReactiveForm({ model, onSubmitted }){
                 </div>
             )
             :field.type === "long-text" ? (
+                <div className="grey-container mb-1">
                 <div key={index} className="input">
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <textarea onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)}></textarea>
@@ -119,13 +122,17 @@ function RenderReactiveForm({ model, onSubmitted }){
                     <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
-                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
+                    <input type= "number" onChange = {e =>  setHard([...hard,e.target.value])} />
                     </div>
                     </div>
                 </div>
+                </div>
             ) : field.type === "multioption-singleanswer" ? (
+                <div className="grey-container mb-1">
                 <MultiOptionField key={index} fieldModel={field} onSelected={res => updateArrOfObjState(setFillableModel, fillableModel, index, "value", res)} />
+                </div>
             ) : field.type === "slider"?(
+                <div className="grey-container mb-1">
                 <div key={index} className="input">
                 <label>{field.title}{field.required && <span className="err">*</span>}</label>
                 <input name="slide" type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
@@ -135,8 +142,9 @@ function RenderReactiveForm({ model, onSubmitted }){
                     </div>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
-                    <input type= "number" onchange = {e =>  setHard([...hard,e.target.value])} />
+                    <input type= "number" onChange = {e =>  setHard([...hard,e.target.value])} />
                     </div>
+                </div>
                 </div>
             )
             : <p key={index}>Unknown field type</p>)}

@@ -23,31 +23,43 @@ function Submissions(){
 
     const getCSV = async (sbmns) => {
         let titles = [];
-        let answers = [];
+        let answers = [[]];
+        let tempanswer = [];
         let csvAnswers = '';
         let csvTitles = '';
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
-            if(i > 1){
+            if(i > 2){
                 titles.push(sbmns[0]["submission"][i]["title"]);
-                titles.push('time for question ' + (i - 1));
+                titles.push('time for question ' + (i - 3));
+                titles.push('difficuly of question' + (i-3))
             } else {
                 titles.push(sbmns[0]["submission"][i]["title"]);
             }
         }
+        for(let j=0;j< sbmns.length;j++){
+            tempanswer=[]
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
-            if(i > 1){
-                answers.push(sbmns[0]["submission"][i]["value"])
-                answers.push(sbmns[0]['diff'][i - 2]);
+            if(i > 2){
+                tempanswer.push(sbmns[j]["submission"][i]["value"])
+                tempanswer.push(sbmns[j]['diff'][i - 3]);
+                tempanswer.push(sbmns[j]['hard'][i-3]);
             } else {
-                answers.push(sbmns[0]["submission"][i]["value"]);
+                tempanswer.push(sbmns[j]["submission"][i]["value"]);
             }
             //answers.push(sbmns[0]["submission"][i]["value"] + sbmns[0]['diff'][i]);
             //answers.push(sbmns[0]["status"][i]);
         }
-        
+        console.log(tempanswer);
+        answers.push(tempanswer);
+    }
+        console.log(answers);
         csvTitles  += titles.join(',') + '\n';
-        csvAnswers += answers.join(',') + '\n';
-        console.log(csvTitles, csvAnswers);
+        for(let i=0;i<answers.length;i++){
+        console.log(answers[i])
+        csvAnswers += answers[i].join(',') + '\n';
+        }
+        console.log(csvTitles);
+        console.log(csvAnswers);
         setCsvData(csvTitles + csvAnswers);
         //setCsvHeaders(csvTitles);
     }
