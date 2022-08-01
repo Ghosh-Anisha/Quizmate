@@ -14,6 +14,7 @@ function RenderReactiveForm({ model, onSubmitted }){
     const [time2, setTime2] = useState([]);
     const [diff,setDiff] = useState(0)
     const [hard,setHard] = useState([])
+    const [loadingtime,setLoad] = useState(false)
     
     const [status, setStatus] = useState([]);
     
@@ -57,12 +58,16 @@ function RenderReactiveForm({ model, onSubmitted }){
     // };
     */
    const startTime =  () => {
+        setLoad(true)
         setTime1([...time1,Date.now()]);
+        setLoad(false)
         console.log(time1);
    }
 
    const endTime =   () => {
+        setLoad(true)
         setTime2([...time2,Date.now()]);
+        setLoad(false)
         console.log(time2);
         console.log(time2-time1);
    }
@@ -97,8 +102,8 @@ function RenderReactiveForm({ model, onSubmitted }){
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <input name={field.type === "number" ? "number" : "short"} type={field.type === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
                     <div>
-                    <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
-                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    <button className="btn" onClick={startTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
                     </div>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
@@ -118,8 +123,8 @@ function RenderReactiveForm({ model, onSubmitted }){
                     <label>{field.title}{field.required && <span className="err">*</span>}</label>
                     <textarea onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)}></textarea>
                     <div>
-                    <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
-                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                    <button className="btn" onClick={startTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>
                     <input type= "number" onChange = {e =>  setHard([...hard,e.target.value])} />
@@ -137,8 +142,8 @@ function RenderReactiveForm({ model, onSubmitted }){
                 <label>{field.title}{field.required && <span className="err">*</span>}</label>
                 <input name="slide" type = "range" onChange = {e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
                 <div>
-                <button className="btn" onClick={startTime}>{ loading ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
-                    <button className="btn" onClick={endTime}>{ loading ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
+                <button className="btn" onClick={startTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Start timer</span>}</button>
+                    <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>stop timer</span>}</button>
                     </div>
                     <div className="input">
                     <label><span className="err">Rate Dfficulty of this task on a scale of 1-10</span></label>

@@ -30,8 +30,8 @@ function Submissions(){
         for(let i = 0; i < sbmns[0]["submission"].length; ++i){
             if(i > 2){
                 titles.push(sbmns[0]["submission"][i]["title"]);
-                titles.push('time for question ' + (i - 3));
-                titles.push('difficuly of question' + (i-3))
+                titles.push('time for question ' + (i - 2));
+                titles.push('difficuly of question' + (i-2))
             } else {
                 titles.push(sbmns[0]["submission"][i]["title"]);
             }
