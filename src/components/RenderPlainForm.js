@@ -43,7 +43,8 @@ function RenderPlainForm({ model }){
                 (
                     <div>
                         <label>{field.title}{field.required && <span className="err">*</span>}</label>
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange" oninput="num.value = this.value"></input>
+                        <output id="num">0</output>
                     </div>
                 )
                 : <p key={index}>Unknown fiel type.</p>

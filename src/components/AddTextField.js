@@ -5,6 +5,10 @@ function AddTextField({inputType, add, close}){
 
     const [title, setTitle] = useState("")
 
+    const [answer, setAnswer] = useState("")
+
+    const [marks, setMarks] = useState()
+
 
     const [required, setRequired] = useState(false)
 
@@ -26,7 +30,6 @@ function AddTextField({inputType, add, close}){
                 <label>Enter title</label>
                 <input type="text" placeholder={`Eg. Enter your ${inputType === "short-text" ? "Username" : inputType === "long-text" ? "information" : "age"}`} onChange={e => setTitle(e.target.value)} />
             </div>
-
             <div className="input inline">
                 <label>Required: </label>
                 <input type="checkbox" onChange={() => setRequired(!required)} />
