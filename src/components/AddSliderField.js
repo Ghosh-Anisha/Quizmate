@@ -1,13 +1,9 @@
 import { useState } from 'react'
 
-function AddTextField({inputType, add, close}){
+function AddSliderField({inputType, add, close}){
     const [err, setErr ] = useState("")
-
+    const [value,setValue] = useState("")
     const [title, setTitle] = useState("")
-
-    const [answer, setAnswer] = useState("")
-
-    const [marks, setMarks] = useState()
 
 
     const [required, setRequired] = useState(false)
@@ -18,6 +14,7 @@ function AddTextField({inputType, add, close}){
 
         add({
             title,
+            value,
             required,
             type: inputType
         })
@@ -28,8 +25,9 @@ function AddTextField({inputType, add, close}){
         <div>
             <div className="input">
                 <label>Enter title</label>
-                <input type="text" placeholder={`Eg. Enter your ${inputType === "short-text" ? "Username" : inputType === "long-text" ? "information" : "age"}`} onChange={e => setTitle(e.target.value)} />
+                <input type="text" placeholder={`Eg. Rate this product`} onChange={e => setTitle(e.target.value)} />
             </div>
+
             <div className="input inline">
                 <label>Required: </label>
                 <input type="checkbox" onChange={() => setRequired(!required)} />
@@ -40,4 +38,4 @@ function AddTextField({inputType, add, close}){
     )
 }
 
-export default AddTextField
+export default AddSliderField

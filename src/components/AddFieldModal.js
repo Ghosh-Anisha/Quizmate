@@ -1,5 +1,6 @@
 import AddTextField from './AddTextField';
 import AddMultiOptionField from './AddMultiOptionField';
+import AddSliderField from './AddSliderField';
 
 function AddFieldModal({ inputType, add, close }){
     return (
@@ -11,7 +12,10 @@ function AddFieldModal({ inputType, add, close }){
                         <AddTextField inputType={inputType} add={add} close={close} />
                     ) : (["multioption-singleanswer", "multioption-multianswer"].indexOf(inputType) > -1) ? (
                         <AddMultiOptionField inputType={inputType} add={add} close={close} />
-                    ) : <p>Unknown type</p>
+                    ) : (["slider"].indexOf(inputType) > -1) ? (
+                        <AddSliderField inputType={inputType} add={add} close={close}/>
+                    ):
+                    <p>Unknown type</p>
                 }
             </div>
         </div>

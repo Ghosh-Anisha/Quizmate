@@ -10,13 +10,11 @@ export const signup = async (email, pwd) =>
       userCredential.user.sendEmailVerification();
       auth.signOut();
       alert("Please check your email for verification link");
-      //toast.info("Please check your email for verification link");
     })
     .catch(alert);
 export const login = async (email, pwd) =>
   auth.signInWithEmailAndPassword(email.trim(), pwd.trim()).then((user) => {
     if (!user.user.emailVerified) {
-      //toast.error("Please verify your email");
       auth.signOut();
       alert("Please verify your email");
     }
@@ -55,15 +53,6 @@ export const getForm = async (ops) => {
   let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === ops.id);
   doc = { ...doc.data(), id: doc.id };
-  if(new Date(doc.endDate.trim()) < new Date()){
-    alert("Quiz has expired on" + new Date(doc.endDate.trim()));
-    return;
-  }
-  else if (new Date(doc.startDate.trim()) > new Date()) {
-    alert("Quiz is not yet available, come back at " + new Date(doc.startDate.trim()));
-    return;
-  }
-  
   return doc;
 };
 
@@ -84,7 +73,7 @@ export const uploadFile = (file, fileName) => {
   return ref.put(file);
 };
 
-export const submitForm = async (submission, formId) => {
+export const submitForm = async (submission, formId, time1,time2,hard) => {
   let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === formId);
   let formData = { ...doc.data(), id: doc.id };
@@ -118,12 +107,18 @@ export const submitForm = async (submission, formId) => {
     }
     marksTotal += parseInt(submission[i]['marks'])
   }
-
+  let diff = []
+  for(let i = 0; i < time1.length; i++) {
+    diff.push((time2[i]-time1[i])/1000)
+  }
+  console.log(hard);
   firestore.collection("submissions").add({
     submission,
     formId,
     marksObtained,
-    marksTotal
+    marksTotal,
+    diff,
+    hard
   });
 };
 

@@ -1,15 +1,15 @@
-![OpenUI5 logo](https://img.icons8.com/external-bearicons-blue-bearicons/344/external-Quiz-approved-and-rejected-bearicons-blue-bearicons.png)
+![OpenUI5 logo](https://img.icons8.com/color/48/000000/neural_connections.png)
 
-# Quizmate
-Free Quiz app to be able to conduct and share quizzes with other online
+# Neural Correlates
+Free Form app to conduct and share surveys online
 
 
 
 ## Setup
 1. Clone the repository and navigate into it
     ```sh
-    git clone https://github.com/Ghosh-Anisha/Quizmate
-    cd Quizmate
+    git clone https://github.com/tusharshetty61/Neural-Correlates-App
+    cd Neural-Correlates-App
     ```
 2. Install all dependencies
     ```sh

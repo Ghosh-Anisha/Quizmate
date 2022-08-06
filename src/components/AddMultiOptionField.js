@@ -3,15 +3,13 @@ import { useState, createRef } from 'react'
 function AddMultiOptionField({ inputType, add, close }){
     const [err, setErr ] = useState("")
     const [opterr, setOpterr ] = useState("")
-
     const [title, setTitle] = useState("")
-    const [answer,setAnswer]=useState("")
-
     const [required, setRequired] = useState(false)
     const inputRef = createRef()
+    const [answer,setAnswer] = useState("")
+    const [marks,setMarks] = useState("")
     const [options, setOptions] = useState([])
     const [option, setOption] = useState("")
-    const[marks, setMarks] = useState("");
 
     const addField = () => {
         if(!title.trim()) return setErr("Title is required")
@@ -21,7 +19,6 @@ function AddMultiOptionField({ inputType, add, close }){
             title,
             required,
             options,
-            answer,
             marks,
             type: inputType
         })
@@ -59,13 +56,6 @@ function AddMultiOptionField({ inputType, add, close }){
                 <input type="text" className="mb-1" placeholder="Enter a option" onChange={e => setOption(e.target.value)} ref={inputRef} />
                 {opterr && <p className="err mb-1 text-small">{opterr}</p>}
                 <button class="btn" onClick={addOption}>Add Option</button>
-            </div>
-            <div className="input">
-                <input type= "text" className="mb-1" placeholder="Enter answer" onChange={e=> setAnswer(e.target.value)} ref={inputRef} />
-            </div>
-            <div className="input">
-                <label>Enter marks to be assigned</label>
-                <input type='number' placeholder="Enter marks" onChange={e => setMarks(e.target.value)} />
             </div>
             <div className="input inline">
                 <label>Required: </label>
